@@ -411,6 +411,55 @@ class VolumePrinter(Sofa.Core.Controller):
         print(vol_tab)
 
 
+
+class positionPrinter(Sofa.Core.Controller):
+    def __init__(self,module,*args, **kwargs):
+        Sofa.Core.Controller.__init__(self,*args,**kwargs)
+        self.RootNode = kwargs["RootNode"]
+        # self.step = step
+        self.IterSimu = 0 # Counter for dt steps before stopping simulation
+        self.ecart = 0 # ecart entre la simulation et la réalité, en mm
+        self.stiffNode = self.RootNode.getChild('goal')
+        self.position = self.stiffNode.getObject('goalMO')
+        #self.pressure , txt_chmbre = connect.CavityConnect(RootNode = self.RootNode,module = module)
+        # txt_chmbre = "" # pour ne pas avoir d'entête fausse
+        # self.nf, self.fichier_csv = connect.OpenPrintFile(module,txt_chmbre,'.csv','pressure_record_')
+
+        f = open("C:\Driver_Positions\PositonsOfDriver.csv", "w", newline='')
+        f.truncate()
+        f.close()
+        #header = ["X", "Y", "Z"]
+        #writer = csv.writer(f)
+        #writer.writerow(header)
+        #f.writer = csv.DictWriter(f,fieldnames=f.header)
+       
+
+
+    def onAnimateBeginEvent(self, dt): #is there a volume attribute of the volume part of the object? same with the pressure thing?
+        d = copy.copy(self.position.position.value)
+       # print(d)
+
+
+        #vector = d.tolist()
+       # x=str(vector[0][0])
+        #y=str(vector[0][1])
+      #  z=str(vector[0][2])
+
+        #print(x  +  " " + y + " " + z)
+
+        f = open("C:\Driver_Positions\PositonsOfDriver.csv", "w")
+        f.truncate() 
+        writer = csv.writer(f)
+        writer.writerow(d)
+
+        f.close()
+
+       # D = repr(d)
+       
+        #vol_tab = [copy.copy(self.pressure[0].volumeGrowth.value),copy.copy(self.pressure[1].volumeGrowth.value),copy.copy(self.pressure[2].volumeGrowth.value)]
+        #S = "{:,.3f}".format(vol_tab[0]) + ", " + "{:,.3f}".format(vol_tab[1]) + ", " + "{:,.3f}".format(vol_tab[2]) + "\n
+
+
 #converges on correct volume after about .5 s 
 class goToPosition(Sofa.Core.Controller):
     def __init__(self, x,  y, z, *args, **kwargs):
