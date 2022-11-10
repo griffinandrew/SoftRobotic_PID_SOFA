@@ -101,12 +101,12 @@ def MyScene(rootNode,YM_soft_part,coef_poi,act_flag,thickness):
 
 
         # rootNode.addObject(GoalKeyboardController(goal_pas,rootNode)) # Choose between GoalKeyboardController and GoalShift => you may only use one, uncomment the one you want to use
-       # rootNode.addObject(GoalShift(rootNode))
+        rootNode.addObject(GoalShift(rootNode))
         # rootNode.addObject(CircleTrajectory(RootNode = rootNode, rayon = 4, nb_iter = 100))
         #rootNode.addObject(PressurePrinter(module = collapsible,RootNode = rootNode))
        # rootNode.addObject(ArduinoPressure(module = collapsible,RootNode = rootNode)) # pour envoyer les pressions calculées par le modèle inverse au robot (hardware)
         rootNode.addObject(VolumePrinter(module = collapsible,RootNode = rootNode))
-        rootNode.addObject(goToPositionFromCSV(RootNode = rootNode, x = 14.0, y = 5.0, z = 2.0))
+        #rootNode.addObject(goToPositionFromCSV(RootNode = rootNode, x = 14.0, y = 5.0, z = 2.0))
        # rootNode.addObject(goToPositionSMALL(RootNode = rootNode, x = 10, y = 5, z = 2, nb_iterations=20))
        # rootNode.addObject(goToPosition(RootNode = rootNode, x = 10, y = 5, z = 2))
 
