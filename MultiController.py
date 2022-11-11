@@ -411,7 +411,7 @@ class VolumePrinter(Sofa.Core.Controller):
         print(vol_tab)
 
 
-
+#####this class prints position to csv for use by simulation scene#####
 class positionPrinter(Sofa.Core.Controller):
     def __init__(self,module,*args, **kwargs):
         Sofa.Core.Controller.__init__(self,*args,**kwargs)
