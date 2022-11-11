@@ -556,12 +556,6 @@ class goToPosition(Sofa.Core.Controller):
 
 
 
-
-#################################################################################################################
-
-#go to position reading from csv 
-
-
 #converges on correct volume after about .5 s 
 class goToPositionFromCSV(Sofa.Core.Controller):
     def __init__(self, x,  y, z, *args, **kwargs):
