@@ -440,17 +440,19 @@ class positionPrinter(Sofa.Core.Controller):
        # print(d)
 
 
-        #vector = d.tolist()
-       # x=str(vector[0][0])
-        #y=str(vector[0][1])
-      #  z=str(vector[0][2])
+        vector = d.tolist()
+        x=str(vector[0][0])
+        y=str(vector[0][1])
+        z=str(vector[0][2])
 
         #print(x  +  " " + y + " " + z)
 
         f = open("C:\Driver_Positions\PositonsOfDriver.csv", "w")
         f.truncate() 
         writer = csv.writer(f)
-        writer.writerow(d)
+        writer.writerow(vector)
+
+        #writer.writerow(x + y + z)
 
         f.close()
 
