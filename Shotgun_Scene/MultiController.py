@@ -433,7 +433,45 @@ class goToPositionFromCSV(Sofa.Core.Controller):
       #  self.pressure, txt_chmbre = connect.CavityConnect(RootNode=self.RootNode,module=module)
 
 
+    def processStr2(self,vector_pos): # this will extract the digits from the the file and set them as the x y z coordinates
+        num_space = 0 
+        vec_pos = vector_pos
 
+        tempX = ""
+        tempY = "" 
+        tempZ = "" 
+
+        for element in range(0, len(vec_pos)): 
+
+            if vec_pos[element] == ",":
+                num_space+=1
+            
+            if num_space == 3:
+                break
+
+            if ((not (vec_pos[element] == ",")) and num_space == 0): 
+                tempX += str(vec_pos[element])
+                #print(tempX)
+
+            
+            if ((not (vec_pos[element] == ",")) and num_space == 1) :
+                tempY += str(vec_pos[element])
+                #print(tempY)
+
+
+            if ((not (vec_pos[element] == ",")) and num_space == 2) :
+                tempZ += str(vec_pos[element])
+                #print(tempZ)
+
+
+
+        print("completed strings")
+        print(tempX +  "      " + tempY + "       " + tempZ)
+        self.x = float(tempX)
+        self.y = float(tempY)
+        #self.z = float(tempZ)
+      
+      
 
     def processStr(self, vector_pos): # this will extract the digits from the the file and set them as the x y z coordinates
         num_space = 0 
@@ -496,7 +534,8 @@ class goToPositionFromCSV(Sofa.Core.Controller):
             print("string to process / contents of ")
             print(position_to_traverse_to)
 
-            self.processStr(position_to_traverse_to) 
+            #self.processStr(position_to_traverse_to)
+            self.processStr2(position_to_traverse_to) 
 
 
             if (xCurr - self.x < 0): # means that you need to move up
