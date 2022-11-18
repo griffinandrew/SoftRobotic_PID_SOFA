@@ -408,7 +408,27 @@ class VolumePrinter(Sofa.Core.Controller):
     def onAnimateBeginEvent(self, dt): #is there a volume attribute of the volume part of the object? same with the pressure thing?
         vol_tab = [copy.copy(self.pressure[0].volumeGrowth.value),copy.copy(self.pressure[1].volumeGrowth.value),copy.copy(self.pressure[2].volumeGrowth.value)]
         #S = "{:,.3f}".format(vol_tab[0]) + ", " + "{:,.3f}".format(vol_tab[1]) + ", " + "{:,.3f}".format(vol_tab[2]) + "\n"
-        print(vol_tab)
+      #  print('before transform')
+      #  print(vol_tab)
+
+        chm1_vol = vol_tab[0]
+        # copy.copy(self.pressure[0].volumeGrowth.value)
+        chm2_vol = vol_tab[1]
+        #copy.copy(self.pressure[1].volumeGrowth.value)
+        chm3_vol = vol_tab[2]
+        #copy.copy(self.pressure[2].volumeGrowth.value)
+
+
+        #these code snippet is just using the transformation of the volume to account for give negative volumes and the proper actuatuon volume
+
+        chm1_vol = (((chm1_vol / 1000) - 0.055) / 1.026) * (255/30)
+        chm2_vol = (((chm2_vol / 1000) - 0.055) / 1.026) * (255/30)
+        chm3_vol = (((chm3_vol / 1000) - 0.055) / 1.026) * (255/30)
+
+        vol_tab2 = [chm1_vol, chm2_vol, chm3_vol]
+
+       # print("after transform")
+        print(vol_tab2)
 
 
 
@@ -430,7 +450,7 @@ class goToPositionFromCSV(Sofa.Core.Controller):
         #self.line_counter = 0 #this will just keep track of how many lines have been read 
 
         self.done_flag = 0
-      #  self.pressure, txt_chmbre = connect.CavityConnect(RootNode=self.RootNode,module=module)
+       # self.pressure, txt_chmbre = connect.CavityConnect(RootNode=self.RootNode)
 
 
     def processStr2(self,vector_pos): # this will extract the digits from the the file and set them as the x y z coordinates
@@ -465,11 +485,11 @@ class goToPositionFromCSV(Sofa.Core.Controller):
 
 
 
-        print("completed strings")
-        print(tempX +  "      " + tempY + "       " + tempZ)
+      #  print("completed strings")
+   #     print(tempX +  "      " + tempY + "       " + tempZ)
         self.x = float(tempX)
         self.y = float(tempY)
-        #self.z = float(tempZ)
+        self.z = float(tempZ)
       
       
 
@@ -477,8 +497,8 @@ class goToPositionFromCSV(Sofa.Core.Controller):
         num_space = 0 
         vec_pos = vector_pos
 
-        print('string recieved in proc')
-        print(vec_pos)
+       # print('string recieved in proc')
+       # print(vec_pos)
         
         tempX = ""
         tempY = "" 
@@ -510,7 +530,7 @@ class goToPositionFromCSV(Sofa.Core.Controller):
 
         #print(type(tempX))
       #  print('within process string')
-        print(tempX +  "      " + tempY + "       " + tempZ)
+     #   print(tempX +  "      " + tempY + "       " + tempZ)
         self.x = float(tempX)
         self.y = float(tempY)
         self.z = float(tempZ)
@@ -572,8 +592,27 @@ class goToPositionFromCSV(Sofa.Core.Controller):
         self.prev_pos = self.position.position
 
 
-       # board = pyfirmata.Arduino("COM8")
-      #  vol_tab = [copy(self.pressure[0].volumeGrowth.value),copy(self.pressure[1].volumeGrowth.value),copy(self.pressure[2].volumeGrowth.value)]
+        # board = pyfirmata.Arduino("COM8")
+        #  vol_tab = [copy(self.pressure[0].volumeGrowth.value),copy(self.pressure[1].volumeGrowth.value),copy(self.pressure[2].volumeGrowth.value)]
+
+
+      #  chm1_vol = copy(self.pressure[0].volumeGrowth.value)
+       # chm2_vol = copy(self.pressure[1].volumeGrowth.value)
+       # chm3_vol = copy(self.pressure[1].volumeGrowth.value)
+
+
+        #these code snippet is just using the transformation of the volume to account for give negative volumes and the proper actuatuon volume
+
+       # chm1_vol = (((chm1_vol / 1000) - 0.055) / 1.026) * (255/30)
+       # chm2_vol = (((chm2_vol / 1000) - 0.055) / 1.026) * (255/30)
+       # chm3_vol = (((chm3_vol / 1000) - 0.055) / 1.026) * (255/30)
+
+       # vol_tab = [chm1_vol, chm2_vol, chm3_vol]
+
+       # print(vol_tab)
+
+
+
       #  S = "{:,.5f}".format(vol_tab[0]) + ", " + "{:,.5f}".format(vol_tab[1]) + ", " + "{:,.5f}".format(vol_tab[2]) + "\n"
      #   print(S)
       #  board.send_sysex(STRING_DATA, util.str_to_two_byte_iter(S))
