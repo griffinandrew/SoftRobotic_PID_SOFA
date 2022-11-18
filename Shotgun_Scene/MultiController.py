@@ -551,8 +551,8 @@ class goToPositionFromCSV(Sofa.Core.Controller):
         f.close()
 
         if position_to_traverse_to != "":
-            print("string to process / contents of ")
-            print(position_to_traverse_to)
+           # print("string to process / contents of ")
+           # print(position_to_traverse_to)
 
             #self.processStr(position_to_traverse_to)
             self.processStr2(position_to_traverse_to) 
