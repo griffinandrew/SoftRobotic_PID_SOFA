@@ -13,21 +13,6 @@ String posX = ""; String posY = ""; String posZ = "";
 //omni device coordinates after converted to double
 float pos_X = 0.0; float pos_Y = 0.0; float pos_Z = 0.0;
 
-// abg coordinates "basis" vectors
-float a1 = 0; float a2 = 1;
-float b1 = -0.866; float b2 = -0.5;
-float c1 = 0.866; float c2 = -0.5;
-
-// Nunchuck position in abg coordinates
-float alphaCoord = 0; float betaCoord = 0; float gammaCoord = 0;
-
-// Chamber volume values
-float alphaVol = 0; float betaVol = 0; float gammaVol = 0;
-
-//chamber levels 
-float alphaLevel =0.0; float betaLevel = 0.0; float gammaLevel = 0.0; 
-
-
 
 void setup() 
 {
@@ -60,37 +45,13 @@ void stringDataCallback(char* strdata)
 
   //converting char* to float
   pos_X = atof(Xstr);
-  pos_Y = atof(Ystr) + 65.511 ; // bascailly  i am adjusting for the origin
-  pos_Z = atof(Zstr) - 10; // note in jacobs he is subtracting the origin here i am adding
-  
-  alphaCoord = pos_Z;
-  betaCoord = (pos_X * b1) + (pos_Z * b2);
-  gammaCoord = (pos_X * c1) + (pos_Z * c2);
+  pos_Y = atof(Ystr);
+  pos_Z = atof(Zstr);
 
-  //invert coordinates
-  alphaCoord = -alphaCoord;
-  betaCoord = -betaCoord;
-  gammaCoord = -gammaCoord;
-
-  alphaLevel = .3367* pos_Y;
-  betaLevel = .3367* pos_Y;
-  gammaLevel = .3367* pos_Y;
-  
-  //map the coordinate system to the appropriate volume 
-  alphaVol = alphaLevel + (100*alphaCoord/180); 
-  betaVol = betaLevel + (100*betaCoord/220);
-  gammaVol = gammaLevel + (100*gammaCoord/220);
-
-  //Constrain volume values from 0 to 100
-  alphaVol = constrain(alphaVol, 0, 100);
-  betaVol = constrain(betaVol, 0, 100);
-  gammaVol = constrain(gammaVol, 0, 100);
-
-  analogWrite(3,ceil(alphaVol));
-  analogWrite(5,ceil(betaVol));
-  analogWrite(6,ceil(gammaVol));
+  analogWrite(5,ceil(pos_X));
+  analogWrite(6,ceil(pos_Y));
+  analogWrite(9,ceil(pos_Z));
 }
-
 
 
 void processStr(char* strdata)
@@ -100,7 +61,7 @@ void processStr(char* strdata)
   String str(strdata);
   posX = "";
   posY = "";
-  posZ = ""; // reset the string to empty at the beginning of the loo[p
+  posZ = ""; // reset the string to empty at the beginning of the loop
   
   for (int i = 0; i < str.length(); i++)  
   {
@@ -112,16 +73,20 @@ void processStr(char* strdata)
     {
       return; // if the string has been properly converted all the way, return to call
     }
+
+    if(str[i] == ']') {
+      return;
+    }
     
-    if (!(isspace(str[i])) && num_space == 0) //x
+    if (!(isspace(str[i])) && (!(str[i] == ',') && (!(str[i] == '[')) && (!(str[i] == ']')) && num_space == 0)) //x
     {
       posX += str[i];
     }
-    if (!(isspace(str[i])) && num_space == 1)  //y 
+    if (!(isspace(str[i])) && (!(str[i] == ',') && (!(str[i] == '[')) && (!(str[i] == ']')) && num_space == 1))  //y 
     {
       posY +=str[i];
     }
-    if (!(isspace(str[i])) && num_space == 2) //z
+    if (!(isspace(str[i])) && (!(str[i] == ',') && (!(str[i] == '[')) && (!(str[i] == ']')) && num_space == 2)) //z
     {
       posZ +=str[i];
     }
