@@ -115,8 +115,10 @@ def main():
             pid_3 = PID(1, 0.1, 0.05, setpoint=v_3)
 
 
-            f = open("C:\Driver_Positions\TEST_aurora_positions.csv", "r", newline='')
+            f = open("C:\Driver_Positions\Aurora_pos.csv", "r", newline='')
             current_pos = f.readline()
+            print("positon to traverse: " + current_pos)
+
             if current_pos != "" :
                 processStr2(current_pos)
 
