@@ -15,7 +15,10 @@ TRACK = NDITracker(SETTINGS)
 TRACK.start_tracking()
 port_handles, timestamps, framenumbers, tracking, quality = TRACK.get_frame()
 
+
+
 while True:
+
     # Introduce a small-time delay (otherwise all values become undefined)
 
     time.sleep(0.05)
@@ -45,7 +48,7 @@ while True:
     #writing coordinates to file for export
     f = open("C:\Driver_Positions\Aurora_pos.csv", "w", newline='')
 
-    writer = csv.writer(f);
+    writer = csv.writer(f)
     
     vector = [round(x3, 3), round(y3, 3), round(z3, 3)]
 
@@ -53,6 +56,5 @@ while True:
     f.close()
 
 
-
-    print(round(x3, 2), round(y3, 2), round(z3, 2), '\n')
-    # print(x1, y1, z1, x2, y2, z2, '\n')
+    ts = time.time()
+    print(round(x3, 2), round(y3, 2), round(z3, 2), ts, '\n')
