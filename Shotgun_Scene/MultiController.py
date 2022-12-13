@@ -22,7 +22,7 @@ from re import L
 
 # pi = 3.14 # remplacé par math.pi
 
-#board = pyfirmata.Arduino("COM7") 
+board = pyfirmata.Arduino("COM4") 
 
 # réunit toutes les fonctions python, permettant de :
 # - controller le robot en pression/volume
@@ -406,29 +406,37 @@ class VolumePrinter(Sofa.Core.Controller):
 
 
     def onAnimateBeginEvent(self, dt): #is there a volume attribute of the volume part of the object? same with the pressure thing?
+
+
+       # board = pyfirmata.Arduino("COM4")
         vol_tab = [copy.copy(self.pressure[0].volumeGrowth.value),copy.copy(self.pressure[1].volumeGrowth.value),copy.copy(self.pressure[2].volumeGrowth.value)]
-        #S = "{:,.3f}".format(vol_tab[0]) + ", " + "{:,.3f}".format(vol_tab[1]) + ", " + "{:,.3f}".format(vol_tab[2]) + "\n"
-      #  print('before transform')
-      #  print(vol_tab)
 
         chm1_vol = vol_tab[0]
-        # copy.copy(self.pressure[0].volumeGrowth.value)
         chm2_vol = vol_tab[1]
-        #copy.copy(self.pressure[1].volumeGrowth.value)
         chm3_vol = vol_tab[2]
-        #copy.copy(self.pressure[2].volumeGrowth.value)
+        print("chamber vols")
+        print(chm1_vol)
+        print(chm2_vol)
+        print(chm3_vol)
+        print("done")
 
 
         #these code snippet is just using the transformation of the volume to account for give negative volumes and the proper actuatuon volume
 
-        chm1_vol = (((chm1_vol / 1000) - 0.055) / 1.026) * (255/30)
-        chm2_vol = (((chm2_vol / 1000) - 0.055) / 1.026) * (255/30)
-        chm3_vol = (((chm3_vol / 1000) - 0.055) / 1.026) * (255/30)
+        chm1_vol = ((((chm1_vol / 1000) + 0.055) / 1.026) * (1000))  #255 bytes  / 30 ml
+        chm2_vol = ((((chm2_vol / 1000) + 0.055) / 1.026) * (1000))
+        chm3_vol = ((((chm3_vol / 1000) + 0.055) / 1.026) * (1000))
 
         vol_tab2 = [chm1_vol, chm2_vol, chm3_vol]
 
-       # print("after transform")
+        print("vol tab")
         print(vol_tab2)
+
+        S = "{:,.5f}".format(vol_tab2[0]) + ", " + "{:,.5f}".format(vol_tab2[1]) + ", " + "{:,.5f}".format(vol_tab2[2]) + "\n"
+        print("S")
+        print(S)
+        board.send_sysex(STRING_DATA, util.str_to_two_byte_iter(S))
+
 
 
 
@@ -537,12 +545,19 @@ class goToPositionFromCSV(Sofa.Core.Controller):
 
     def onAnimateBeginEvent(self, dt):
 
-        # get the current position of the simulation
+
+
         self.prev_pos = copy.copy(self.position.position.value) #maybe this should be later??? 
+
+        print(self.prev_pos)
+        #need to verify that this is valid
 
         xCurr = self.prev_pos[0][0]
         yCurr = self.prev_pos[0][1]
         zCurr = self.prev_pos[0][2] # need to verify these are what i think they correspond to
+        print(xCurr)
+        print(yCurr)
+        print(zCurr)
 
 
         f = open("C:\Driver_Positions\convert_pos2vol.csv", "r", newline='')
@@ -556,6 +571,7 @@ class goToPositionFromCSV(Sofa.Core.Controller):
 
             #self.processStr(position_to_traverse_to)
             self.processStr2(position_to_traverse_to) 
+
 
 
             if (xCurr - self.x < 0): # means that you need to move up
@@ -588,31 +604,9 @@ class goToPositionFromCSV(Sofa.Core.Controller):
                 #  print(z_mv)
                 self.prev_pos[0][2] -= z_mv
 
-        self.position.position = [self.prev_pos[0]]
-        self.prev_pos = self.position.position
+        self.position.position = [self.prev_pos[0]] #
+        # self.prev_pos = self.position.position
 
+#################################################################################################
+#this loop of setting the prev_pos to is resulting in NAN and creating meaningless results 
 
-        # board = pyfirmata.Arduino("COM8")
-        #  vol_tab = [copy(self.pressure[0].volumeGrowth.value),copy(self.pressure[1].volumeGrowth.value),copy(self.pressure[2].volumeGrowth.value)]
-
-
-      #  chm1_vol = copy(self.pressure[0].volumeGrowth.value)
-       # chm2_vol = copy(self.pressure[1].volumeGrowth.value)
-       # chm3_vol = copy(self.pressure[1].volumeGrowth.value)
-
-
-        #these code snippet is just using the transformation of the volume to account for give negative volumes and the proper actuatuon volume
-
-       # chm1_vol = (((chm1_vol / 1000) - 0.055) / 1.026) * (255/30)
-       # chm2_vol = (((chm2_vol / 1000) - 0.055) / 1.026) * (255/30)
-       # chm3_vol = (((chm3_vol / 1000) - 0.055) / 1.026) * (255/30)
-
-       # vol_tab = [chm1_vol, chm2_vol, chm3_vol]
-
-       # print(vol_tab)
-
-
-
-      #  S = "{:,.5f}".format(vol_tab[0]) + ", " + "{:,.5f}".format(vol_tab[1]) + ", " + "{:,.5f}".format(vol_tab[2]) + "\n"
-     #   print(S)
-      #  board.send_sysex(STRING_DATA, util.str_to_two_byte_iter(S))

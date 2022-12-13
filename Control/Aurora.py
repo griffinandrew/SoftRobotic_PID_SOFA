@@ -18,7 +18,7 @@ port_handles, timestamps, framenumbers, tracking, quality = TRACK.get_frame()
 
 
 while True:
-
+   # print('running')
     # Introduce a small-time delay (otherwise all values become undefined)
 
     time.sleep(0.05)
@@ -57,4 +57,4 @@ while True:
 
 
     ts = time.time()
-    print(round(x3, 2), round(y3, 2), round(z3, 2), ts, '\n')
+    print(round(x3, 3), round(y3, 3), round(z3, 3), ts, '\n')

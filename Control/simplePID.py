@@ -104,7 +104,7 @@ def fileWrite(c_1, c_2,c_3):
 def main():
     print("in main")
     while(True):
-        print("in loop")
+        #print("in loop")
         f = open("C:\Driver_Positions\PositonsOfDriver.csv", "r", newline='')
         position_to_traverse_to = f.readline()
         
