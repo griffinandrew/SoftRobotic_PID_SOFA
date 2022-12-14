@@ -1,0 +1,8 @@
+def GeomagicDevice(parentNode=None, name=None, position=None):
+    name=parentNode.addChild(name)
+    name.addObject('MechanicalObject', template="Rigid3", name="DOFs", position=position)
+    # ^ i think that if i change this positional argument to be the stiff node location, it might track it
+    name.addObject('MechanicalStateController', template="Rigid3", listening="true", mainDirection="-1.0 0.0 0.0", handleEventTriggersUpdate="true")
+    #i think this is just setting certain parameters?
+    GeomagicDevice.MO=name.DOFs
+    GeomagicDevice.MSC=name.GEOMSC 
