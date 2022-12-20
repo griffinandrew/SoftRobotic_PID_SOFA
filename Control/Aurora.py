@@ -5,6 +5,7 @@ from Tracker import Tracking
 import time
 import csv
 from sksurgerynditracker.nditracker import NDITracker
+import numpy
 
 # Initialize settings for NDI library -- DO NOT CHANGE anything except port numbers when necessary
 SETTINGS = {
@@ -52,7 +53,10 @@ while True:
     
     vector = [round(x3, 3), round(y3, 3), round(z3, 3)]
 
-    writer.writerow(vector)
+    ##trying to add safety check to only add the vector if it is a val not NAN
+    #if vector != "":
+    if ((!(np.isnan(vector[0]))) and (!(np.isnan(vector[1]))) and (!(np.isnan(vector[2]))))
+        writer.writerow(vector)
     f.close()
 
 
