@@ -40,8 +40,9 @@ Files relating to the SOFA simulatation that is used to take the calcualted PID 
 
 #### Scene.py - Shotgun
 
-During the creation of the actuator we select goToPositionFromCSV(RootNode = rootNode, x = 14.0, y = 5.0, z = 2.0), note that the start points of 14,5,2 are based off the current mesh model dimensions but can be changed and deleted within the method. 
+During the creation of the actuator we select goToPositionFromCSV(RootNode = rootNode, x = 14.0, y = 5.0, z = 2.0), note that the start points of 14,5,2 are based off the current mesh model dimensions but can be changed and deleted within the method. Note that we will also be using VolumePrinter(module = collapsible,RootNode = rootNode) to send the volume to be actuated into each chamber is sent via firmata to the actuatepumps.ino file. 
 
 #### MuliController.py - Shotgun
 
-The method of control used in this file is located at the very end and uses the class goToPositionFromCSV(Sofa.Core.Controller). This class records prev_position is as the current position at the start of the loop, reads in the positions to be converted from Simple_PID.py or the convert_pos2vol.csv file, processes the string to make break it into its componenet parts and then in one big movement the robot is sent to that given position within the onAnimateBeginEvent Callback used here.
+The method of control used in this file is located at the very end and uses the class goToPositionFromCSV(Sofa.Core.Controller). This class records prev_position is as the current position at the start of the loop, reads in the positions to be converted from Simple_PID.py or the convert_pos2vol.csv file, processes the string to make break it into its componenet parts and then in one big movement the robot is sent to that given position within the onAnimateBeginEvent Callback used here. Note that the volume printer is used to send the volume to be actuated into each chamber via firmata to the actuatepumps.ino file. 
+
