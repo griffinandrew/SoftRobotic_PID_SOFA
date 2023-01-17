@@ -1,3 +1,17 @@
+# Starting and Running this simulation 
+
+1. Ensure that the arduino is updated to the most version of actautepumps.ino and ready to receive info from the shotgun multicontroller file. 
+2. Open SOFA scenes for both the driver and shotgun simualtion scenes. Ensure that for the shotgun scene, the real-time check-box is checked. Start the driver scene. Wait to start the shotgun until tracking is turned on.
+3. Open and start the tracking file using the NDI and aurora software. 
+4. Open and start the simplePID file
+5. Start the shotgun scene (I think you can also do this before the starting the simple_PID but tracking coordinates must be on. 
+
+# Diagram of control flow
+(Aurora) -> (Simple_PID) \ ____ (Shotgun) -> (actuatePumps)
+
+(Driver) -> (Simple_PID) / 
+
+
 # Control
 
 Files relating to the sensing, calulcation and actuation of the robot are contained in this folder.
@@ -49,16 +63,3 @@ The method of control used in this file is located at the very end and uses the 
 # Geomagic
 
 This is the code previously used to use the haptic device as a controller. My thought was if I changed the initiallized position to that of the stiffnode (ie the tip of the robot) moving the haptic cursor would then move the simulation.
-
-# Starting and Running this simulation 
-
-1. Ensure that the arduino is updated to the most version of actautepumps.ino and ready to receive info from the shotgun multicontroller file. 
-2. Open SOFA scenes for both the driver and shotgun simualtion scenes. Ensure that for the shotgun scene, the real-time check-box is checked. Start the driver scene. Wait to start the shotgun until tracking is turned on.
-3. Open and start the tracking file using the NDI and aurora software. 
-4. Open and start the simplePID file
-5. Start the shotgun scene (I think you can also do this before the starting the simple_PID but tracking coordinates must be on. 
-
-# Diagram of control flow
-(Aurora) -> (Simple_PID) \ ____ (Shotgun) -> (actuatePumps)
-
-(Driver) -> (Simple_PID) / 
