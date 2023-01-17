@@ -58,4 +58,5 @@ The method of control used in this file is located at the very end and uses the 
 
 # Diagram of control flow
 (Aurora) -> (Simple_PID) \____ (Shotgun) -> (actuatePumps)
+
 (Driver) -> (Simple_PID) / 
