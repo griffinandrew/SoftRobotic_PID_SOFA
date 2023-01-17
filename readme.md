@@ -57,6 +57,6 @@ The method of control used in this file is located at the very end and uses the 
 5. Start the shotgun scene (I think you can also do this before the starting the simple_PID but tracking coordinates must be on. 
 
 # Diagram of control flow
-(Aurora) -> (Simple_PID) \____ (Shotgun) -> (actuatePumps)
+(Aurora) -> (Simple_PID) \ ____ (Shotgun) -> (actuatePumps)
 
 (Driver) -> (Simple_PID) / 
