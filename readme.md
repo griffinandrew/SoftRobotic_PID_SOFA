@@ -46,7 +46,9 @@ During the creation of the actuator we select goToPositionFromCSV(RootNode = roo
 
 The method of control used in this file is located at the very end and uses the class goToPositionFromCSV(Sofa.Core.Controller). This class records prev_position is as the current position at the start of the loop, reads in the positions to be converted from Simple_PID.py or the convert_pos2vol.csv file, processes the string to make break it into its componenet parts and then in one big movement the robot is sent to that given position within the onAnimateBeginEvent Callback used here. Note that the volume printer is used to send the volume to be actuated into each chamber via firmata to the actuatepumps.ino file. 
 
+# Geomagic
 
+This is the code previously used to use the haptic device as a controller. My thought was if I changed the initiallized position to that of the stiffnode (ie the tip of the robot) moving the haptic cursor would then move the simulation.
 
 # Starting and Running this simulation 
 
